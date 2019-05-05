@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from PIL import Image
 
 base_url = "http://jw.hzau.edu.cn/"
-aspx_url = "http://jw.hzau.edu.cn/ChexkCode.aspx"
+aspx_url = "http://jw.hzau.edu.cn/CheckCode.aspx"
 ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
 
 header = {
@@ -30,22 +30,22 @@ def get_post_data(url_base, url_aspx):
     image = Image.open("checkcode.gif")
     image.show()
 
-    user = input("学号")
-    pwd = input("密码")
-    checkCode = input("验证码")
-    post_info = {
+    # user = input("学号")
+    # pwd = input("密码")
+    # checkCode = input("验证码")
+    # post_info = {
 
-        "__VIEWSTATE": viewState,
-        "txtUserName": user,
-        "Textbox1": "",
-        "TextBox2": pwd,
-        "txtSecretCode": checkCode,
-        "RadioButtonList1": "(unable to decode value)",
-        "Button1": "",
-        "lbLanguage": "",
-        "hidPdrs": "",
-        "hidsc": "",
-    }
+    #     "__VIEWSTATE": viewState,
+    #     "txtUserName": user,
+    #     "Textbox1": "",
+    #     "TextBox2": pwd,
+    #     "txtSecretCode": checkCode,
+    #     "RadioButtonList1": "(unable to decode value)",
+    #     "Button1": "",
+    #     "lbLanguage": "",
+    #     "hidPdrs": "",
+    #     "hidsc": "",
+    # }
 
 
 get_post_data(base_url, aspx_url)
