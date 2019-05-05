@@ -3,6 +3,8 @@ import tesserocr
 from bs4 import BeautifulSoup
 from PIL import Image
 
+
+
 base_url = "http://jw.hzau.edu.cn/"
 aspx_url = "http://jw.hzau.edu.cn/CheckCode.aspx"
 aspx_default2 = "http://jw.hzau.edu.cn/default2.aspx"
@@ -25,20 +27,18 @@ def get_post_data(url_base, url_aspx, aspx_2):
     viewState = soup.select('body.login_bg input')[0]['value']
     print(viewState)
     img = r.get(url_aspx, stream=True, headers=header)
-    with open("checkcode.jpg", 'wb') as f:
+    with open("checkcode.png", 'wb') as f:
         f.write(img.content)
 
-    image = Image.open("checkcode.jpg")
-    image = image.convert("L")
+    image = Image.open("checkcode.png")
     image.show()
-  
     print(tesserocr.image_to_text(image))
 
     checkCode = input("验证码")
-    user = input("学号")
-    pwd = input("密码")
-    # user = "2017307211017"
-    # pwd = "2017kshzkjdx"
+    # user = input("学号")
+    # pwd = input("密码")
+    user = "2017307211017"
+    pwd = "2017kshzkjdx"
     post_info = {
 
         "__VIEWSTATE": viewState,
@@ -54,8 +54,13 @@ def get_post_data(url_base, url_aspx, aspx_2):
     }
     html_main = r.post(aspx_2, data=post_info, headers=header).text
     soup_main = BeautifulSoup(html_main, 'html.parser')
-    url_kb = "http://jw.hzau.edu.cn/xskbcx.aspx?xh=2017307211017&xm=%BB%C6%C5%ED%D6%BE&gnmkdm=N121603"
-    html_kb = r.get(url_kb,headers= header)
+    post_xk = {
+        "xh" : user,
+        "xm" : "jkj".encode('gb2312'),
+        "gnmkdm" : "N121603"
+            }
+    url_kb = "http://jw.hzau.edu.cn/xskbcx.aspx"
+    html_kb = r.get(url_kb,params=post_xk,headers= header)
     soup_kb = BeautifulSoup(html_kb.content,'html.parser')
     print(soup_kb)
 
